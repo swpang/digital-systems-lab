@@ -1,0 +1,7 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"bram_tb_time_synth.v" \
+"../../../../../../lab6_studentcode/bram_tb.v" \
+
+# Do not sort compile order
+nosort

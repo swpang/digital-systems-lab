@@ -1,0 +1,6 @@
+0.7
+2020.2
+Apr 18 2022
+16:05:34
+C:/Users/ECE/Desktop/Lab6/Lab6.sim/sim_1/synth/func/xsim/bram_tb_func_synth.v,1666254392,verilog,,C:/Users/ECE/Desktop/Lab6/student/bram_tb.v,,blk_mem_gen_0;blk_mem_gen_0_blk_mem_gen_generic_cstr;blk_mem_gen_0_blk_mem_gen_prim_width;blk_mem_gen_0_blk_mem_gen_prim_wrapper_init;blk_mem_gen_0_blk_mem_gen_top;blk_mem_gen_0_blk_mem_gen_v8_4_5;blk_mem_gen_0_blk_mem_gen_v8_4_5_synth;blk_mem_gen_1;blk_mem_gen_1_blk_mem_gen_generic_cstr;blk_mem_gen_1_blk_mem_gen_prim_width;blk_mem_gen_1_blk_mem_gen_prim_wrapper;blk_mem_gen_1_blk_mem_gen_top;blk_mem_gen_1_blk_mem_gen_v8_4_5;blk_mem_gen_1_blk_mem_gen_v8_4_5_synth;bram_top;glbl,,,,,,,,
+C:/Users/ECE/Desktop/Lab6/student/bram_tb.v,1666252652,verilog,,,,bram_tb,,,,,,,,

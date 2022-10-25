@@ -1,0 +1,7 @@
+Running: xsim.dir/Barrel_shift_TB_time_synth/xsimk.exe -simmode gui -wdb Barrel_shift_TB_time_synth.wdb -simrunnum 0 -socket 5475
+Design successfully loaded
+Design Loading Memory Usage: 6204 KB (Peak: 6204 KB)
+Design Loading CPU Usage: 31 ms
+Simulation completed
+Simulation Memory Usage: 6972 KB (Peak: 6972 KB)
+Simulation CPU Usage: 31 ms

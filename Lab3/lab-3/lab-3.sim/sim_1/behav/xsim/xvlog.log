@@ -1,0 +1,12 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/ECE/Downloads/Lab3_code/source/tlc_fsm.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tlc_fsm
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/ECE/Downloads/Lab3_code/source/tlc_input.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tlc_input
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/ECE/Downloads/Lab3_code/source/tlc_output.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tlc_output
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/ECE/Downloads/Lab3_code/source/tlc_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tlc_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/ECE/Downloads/Lab3_code/tb/tb_tlc.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_tlc
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/ECE/Desktop/lab-3/lab-3.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl

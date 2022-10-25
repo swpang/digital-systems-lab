@@ -1,0 +1,7 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"Barrel_shift_TB_time_synth.v" \
+"../../../../../../Lab4_student_code/Barrel_shift_TB.v" \
+
+# Do not sort compile order
+nosort

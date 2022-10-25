@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vivado v2022.1 (64-bit)
+# SW Build 3526262 on Mon Apr 18 15:48:16 MDT 2022
+# IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+# Start of session at: Thu Oct 20 17:25:25 2022
+# Process ID: 10276
+# Current directory: C:/Users/ECE/Desktop/Lab6/Lab6.runs/synth_1
+# Command line: vivado.exe -log bram_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source bram_top.tcl
+# Log file: C:/Users/ECE/Desktop/Lab6/Lab6.runs/synth_1/bram_top.vds
+# Journal file: C:/Users/ECE/Desktop/Lab6/Lab6.runs/synth_1\vivado.jou
+# Running On: DESKTOP-QB28D8S, OS: Windows, CPU Frequency: 3000 MHz, CPU Physical cores: 6, Host memory: 8465 MB
+#-----------------------------------------------------------
+source bram_top.tcl -notrace

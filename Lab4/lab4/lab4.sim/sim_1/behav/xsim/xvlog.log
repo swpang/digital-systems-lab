@@ -1,0 +1,4 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab4/Lab4_student_code/Barrel_Shifter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Barrel_Shifter
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab4/Lab4_student_code/Barrel_shift_TB.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Barrel_shift_TB

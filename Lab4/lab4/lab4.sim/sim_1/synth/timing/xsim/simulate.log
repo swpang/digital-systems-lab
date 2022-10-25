@@ -1,0 +1,6 @@
+Vivado Simulator 2019.1
+Time resolution is 1 ps
+!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[Result]: Result is Fail Fail Fail Fail ((<o>, ... ,<o>)).
+!!!!!!!!!!!!!!!!!!!!!!!!!!!
+$finish called at time : 61200 ps : File "C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab4/Lab4_student_code/Barrel_shift_TB.v" Line 199

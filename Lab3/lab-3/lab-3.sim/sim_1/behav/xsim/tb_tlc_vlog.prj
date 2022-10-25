@@ -1,0 +1,13 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../../Downloads/Lab3_code/source/tlc_fsm.v" \
+"../../../../../../Downloads/Lab3_code/source/tlc_input.v" \
+"../../../../../../Downloads/Lab3_code/source/tlc_output.v" \
+"../../../../../../Downloads/Lab3_code/source/tlc_top.v" \
+"../../../../../../Downloads/Lab3_code/tb/tb_tlc.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

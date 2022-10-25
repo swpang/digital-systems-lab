@@ -1,0 +1,36 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Fri Oct 21 16:04:58 2022
+# Process ID: 32392
+# Current directory: C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab6/Lab6_revised/Lab6_revised.runs/synth_1
+# Command line: vivado.exe -log bram_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source bram_top.tcl
+# Log file: C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab6/Lab6_revised/Lab6_revised.runs/synth_1/bram_top.vds
+# Journal file: C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab6/Lab6_revised/Lab6_revised.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source bram_top.tcl -notrace
+Command: synth_design -top bram_top -part xc7a100tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Device 21-403] Loading part xc7a100tcsg324-1
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 31764 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 729.254 ; gain = 177.770
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'bram_top' [C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab6/lab6_studentcode/bram_top.v:4]
+	Parameter IDLE bound to: 1'b0 
+	Parameter TRAN bound to: 1'b1 
+ERROR: [Synth 8-439] module 'blk_mem_gen_0' not found [C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab6/lab6_studentcode/bram_top.v:17]
+ERROR: [Synth 8-6156] failed synthesizing module 'bram_top' [C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab6/lab6_studentcode/bram_top.v:4]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 796.047 ; gain = 244.562
+---------------------------------------------------------------------------------
+RTL Elaboration failed
+INFO: [Common 17-83] Releasing license: Synthesis
+4 Infos, 0 Warnings, 0 Critical Warnings and 3 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+INFO: [Common 17-206] Exiting Vivado at Fri Oct 21 16:05:12 2022...

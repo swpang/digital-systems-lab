@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Mon Oct  3 16:50:40 2022
+# Process ID: 67956
+# Current directory: C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab4/lab4/lab4.runs/synth_1
+# Command line: vivado.exe -log Barrel_Shifter.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Barrel_Shifter.tcl
+# Log file: C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab4/lab4/lab4.runs/synth_1/Barrel_Shifter.vds
+# Journal file: C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/lab/Lab4/lab4/lab4.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source Barrel_Shifter.tcl -notrace

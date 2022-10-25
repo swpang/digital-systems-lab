@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vivado v2022.1 (64-bit)
+# SW Build 3526262 on Mon Apr 18 15:48:16 MDT 2022
+# IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+# Start of session at: Mon Sep 26 19:32:38 2022
+# Process ID: 8888
+# Current directory: C:/Users/ECE/Desktop/lab-3/lab-3.runs/synth_1
+# Command line: vivado.exe -log tlc_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source tlc_top.tcl
+# Log file: C:/Users/ECE/Desktop/lab-3/lab-3.runs/synth_1/tlc_top.vds
+# Journal file: C:/Users/ECE/Desktop/lab-3/lab-3.runs/synth_1\vivado.jou
+# Running On: DESKTOP-QB28D8S, OS: Windows, CPU Frequency: 3000 MHz, CPU Physical cores: 6, Host memory: 8465 MB
+#-----------------------------------------------------------
+source tlc_top.tcl -notrace

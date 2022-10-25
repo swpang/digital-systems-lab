@@ -1,0 +1,10 @@
+0.7
+2020.2
+Apr 18 2022
+16:05:34
+C:/Users/ECE/Desktop/lab-3/lab-3.sim/sim_1/behav/xsim/glbl.v,1649976174,verilog,,,,glbl,,,,,,,,
+C:/Users/ECE/Downloads/Lab3_code/source/tlc_fsm.v,1664188339,verilog,,C:/Users/ECE/Downloads/Lab3_code/source/tlc_input.v,,tlc_fsm,,,,,,,,
+C:/Users/ECE/Downloads/Lab3_code/source/tlc_input.v,1597639943,verilog,,C:/Users/ECE/Downloads/Lab3_code/source/tlc_output.v,,tlc_input,,,,,,,,
+C:/Users/ECE/Downloads/Lab3_code/source/tlc_output.v,1597639815,verilog,,C:/Users/ECE/Downloads/Lab3_code/source/tlc_top.v,,tlc_output,,,,,,,,
+C:/Users/ECE/Downloads/Lab3_code/source/tlc_top.v,1597639922,verilog,,C:/Users/ECE/Downloads/Lab3_code/tb/tb_tlc.v,,tlc_top,,,,,,,,
+C:/Users/ECE/Downloads/Lab3_code/tb/tb_tlc.v,1597648330,verilog,,,,tb_tlc,,,,,,,,

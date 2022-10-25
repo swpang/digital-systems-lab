@@ -1,0 +1,9 @@
+0.7
+2020.2
+Apr 18 2022
+16:05:34
+C:/Users/ECE/Desktop/Lab6/Lab6.gen/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v,1666247267,verilog,,C:/Users/ECE/Desktop/Lab6/student/bram_top.v,,blk_mem_gen_0,,,,,,,,
+C:/Users/ECE/Desktop/Lab6/Lab6.gen/sources_1/ip/blk_mem_gen_1/sim/blk_mem_gen_1.v,1666247330,verilog,,C:/Users/ECE/Desktop/Lab6/Lab6.gen/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v,,blk_mem_gen_1,,,,,,,,
+C:/Users/ECE/Desktop/Lab6/Lab6.sim/sim_1/behav/xsim/glbl.v,1649976174,verilog,,,,glbl,,,,,,,,
+C:/Users/ECE/Desktop/Lab6/student/bram_tb.v,1666252652,verilog,,,,bram_tb,,,,,,,,
+C:/Users/ECE/Desktop/Lab6/student/bram_top.v,1666254567,verilog,,C:/Users/ECE/Desktop/Lab6/student/bram_tb.v,,bram_top,,,,,,,,
