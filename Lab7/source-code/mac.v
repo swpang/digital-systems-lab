@@ -59,15 +59,14 @@ module mac #(
 
                     end
                     else begin
-                    // If not, just waiting for condition.
-                        done <= 1'b0;
+                        state <= STATE_IDLE;
                     end
                 end
                 STATE_MULT: begin
                 // TO DO
                     if (!add) begin
                     // If add signal is low, do muliply with data_a_bf and data_b_bf.
-                    out_temp <= data_a_bf * data_b_bf;
+                        out_temp <= data_a_bf * data_b_bf;
                     end
                     else begin
                     // If add signal is high, shift data_a_bf to match bit representation.        
@@ -79,8 +78,8 @@ module mac #(
                 // TO DO
                 // Do add and make output 'done' flag high.( done = 1)
                 
-                out_temp <= out_temp + data_c_bf;
-                done <= 1'b1;
+                    out_temp <= out_temp + data_c_bf;
+                    done <= 1'b1;
 
                 end
                 default:;

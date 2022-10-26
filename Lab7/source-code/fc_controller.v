@@ -226,16 +226,18 @@ module fc_controller (
                 STATE_INPUT_SET: begin
                     bram_we <= 1'b0;
                     if (input_set_done) begin
+                        bram_en <= 1'b0;
+                        bram_addr <= 4'b1111;
+                        
                         input_set_done <= 1'b0;
                         bram_state <= STATE_BIAS_SET;
                         bram_counter <= 8'b0;
                         latency <= 2'b0;
-                        bram_en <= 1'b0;
-                        bram_addr <= 4'b1111;
                     end
                     else begin
-                    	bram_counter <= bram_counter + 8'b1;
                     	bram_en <= 1'b1;
+
+                        bram_counter <= bram_counter + 8'b1;
                     	if (bram_counter < (INPUT_SIZE>>2)) begin
 	                        bram_addr <= INPUT_START_ADDRESS + bram_counter;
                     	end
@@ -257,16 +259,18 @@ module fc_controller (
                 STATE_BIAS_SET: begin
                     bram_we <= 1'b0;
                     if (bias_set_done) begin
+                        bram_en <= 1'b0;
+                        bram_addr <= 4'b1111;
+
                         bias_set_done <= 1'b0;
                         bram_state <= STATE_WEIGHT_SET;
                         bram_counter <= 8'b0;
                         latency <= 2'b0;
-                        bram_en <= 1'b0;
-                        bram_addr <= 4'b1111;
                     end
                     else begin
-                        bram_counter <= bram_counter + 8'b1;
                         bram_en <= 1'b1;
+
+                        bram_counter <= bram_counter + 8'b1;
                     	if (bram_counter < (BIAS_SIZE>>2)) begin
 	                        bram_addr <= BIAS_START_ADDRESS + bram_counter;
                     	end
@@ -293,23 +297,21 @@ module fc_controller (
                 //////////////////////////////TO-DO/////////////////////////////////
 
                     bram_we <= 1'b0;
-                    if (weight_counter <= OUTPUT_SIZE) begin
-                        weight_set_done <= 1'b0;
-                    end
-
-                    if (weight_set_done) begin
-                        weight_set_done <= 1'b1;
-                        bram_state <= STATE_BIAS_SET; // What should I change this to..?
-                        bram_counter <= 8'b0;
-                        latency <= 2'b0;
+                    if (weight_counter == OUTPUT_SIZE) begin
                         bram_en <= 1'b0;
                         bram_addr <= 4'b1111;
+
+                        weight_set_done <= 1'b0;
+                        bram_state <= STATE_IDLE;
+                        bram_counter <= 8'b0;
+                        weight_counter <= 4'b0;
+                        latency <= 2'b0;
                     end
-                    else begin
+                    else if (mac_state == STATE_IDLE) begin
                         bram_counter <= bram_counter + 8'b1;
                         bram_en <= 1'b1;
                         if (bram_counter < (WEIGHT_SIZE>>2)) begin
-                            bram_addr <= WEIGHT_START_ADDRESS + bram_counter;
+                            bram_addr <= WEIGHT_START_ADDRESS + bram_counter + 2 * weight_counter;
                         end
 
                         if (latency < MEM_LATENCY + 1) begin
@@ -318,11 +320,22 @@ module fc_controller (
                         else begin
                             weight_bf <= weight_bf >> 32;
                             weight_bf[INPUT_SIZE*BYTE_SIZE-1:INPUT_SIZE*BYTE_SIZE-32] <= bram_dout;
+                            
                             if (bram_counter == (INPUT_SIZE>>2)+MEM_LATENCY) begin
                                 weight_set_done <= 1'b1;
-                                weight_counter <= weight_counter + 2'b10;
+                                weight_counter <= weight_counter + 1'b1;
+
+                                bram_addr <= 4'b1111;
+                                bram_counter <= 8'b0;
+                                latency <= 2'b0;
+                                bram_state <= STATE_WEIGHT_SET;
+                                
+                                $display ("this is the weight buffer : %4b", weight_bf);
                             end
                         end
+                    end
+                    else begin
+                        bram_state <= STATE_WEIGHT_SET;
                     end
                 end
 
@@ -368,6 +381,8 @@ module fc_controller (
                     if (weight_set_done) begin
                         weight <= weight_bf;
                         mac_state <= STATE_ACCUMULATE;
+                        weight_set_done <= 1'b0;
+                        mac_en <= 1'b1;
                     end
                     else begin
                         mac_state <= STATE_IDLE;
@@ -384,15 +399,23 @@ module fc_controller (
                 // recursively call MAC 8 times?
 
                 // use mac_counter to count the number of times state_accumulate was repeated
-                    if (mac_counter == INPUT_SIZE-1) begin
-                        mac_state <= STATE_BIAS_ADD
+                    mac_en <= 1'b1;
+                    mac_add <= 1'b0;
+                    if (mac_done) begin
+                        if (mac_counter == INPUT_SIZE) begin
+                            mac_state <= STATE_BIAS_ADD;
+                            mac_counter <= 4'b0;
+                        end
+                        else begin
+                            mac_state <= STATE_ACCUMULATE;
+                            mac_counter <= mac_counter + 4'b1;
+                            
+                            partial_sum <= mac_result;
+                            $display ("%d x %d = %d", data_a, data_b, mac_result);
+                        end
                     end
                     else begin
-                        mac_en <= 1'b1;
-                        add <= 1'b0;
-
-                        if (mac_done) partial_sum <= mac_result;
-                        mac_counter <= mac_counter + 1'b1;
+                        mac_state <= STATE_ACCUMULATE;
                     end
                 end
                 
@@ -400,18 +423,27 @@ module fc_controller (
                 STATE_BIAS_ADD: begin
                 // TO DO
                 // set add bit = 1 and put bias into input_a
-                    add <= 1'b1;
+                    mac_en <= 1'b1;
+                    mac_add <= 1'b1;
 
-                    if (output_counter == OUTPUT_SIZE-1) begin
-                        mac_state <= STATE_DATA_SEND;
-                        t_valid <= 1'b1;
+                    if (mac_done) begin
+                        if (output_counter == OUTPUT_SIZE) begin
+                            mac_state <= STATE_DATA_SEND;
+
+                            output_counter <= 4'b0;
+                            mac_en <= 1'b0;
+                        end
+                        else begin
+                            output_counter <= output_counter + 4'b1;
+                            out_data <= out_data << BYTE_SIZE;
+                            out_data[BYTE_SIZE-1:0] <= result_q;
+                            
+                            $display ("%d + %d = %d", data_a, data_c, mac_result);
+                            $display ("quantized result : %d", result_q);
+                        end
                     end
                     else begin
-                        if (mac_done) begin
-                            output_counter <= output_counter + 1'b1;
-                            out_data[OUTPUT_SIZE-BYTE_SIZE*output_counter:OUTPUT_SIZE-BYTE_SIZE*(output_counter+1)+1] <= result_q;
-                            mac_state <= STATE_IDLE;
-                        end
+                        mac_state <= STATE_BIAS_ADD;
                     end
                 end
                 
@@ -443,8 +475,8 @@ module fc_controller (
     end
 
     // TODO: Assign data for MAC and quantization.
-    assign data_a = (mac_state == STATE_ACCUMULATE) ? input_feature : partial_sum;
-    assign data_b = weight_bf;
-    assign data_c = (mac_state == STATE_ACCUMULATE) ? partial_sum : bias;
-    assign result_q = {mac_result[19], (mac_result[19]) ? ((mac_result[18:15] == 4'b1111) ? mac_result[14:8] : 7'b0000000) : ((mac_result[18:15] == 4'b0000) ? mac_result[14:8] : 7'b1111111)};
+    assign data_a = (mac_state == STATE_ACCUMULATE) ? input_feature : bias;
+    assign data_b = weight;
+    assign data_c = partial_sum;
+    assign result_q = {mac_result[19], ((mac_result[19]) ? ((mac_result[18:15] == 4'b1111) ? mac_result[14:8] : 7'b0000000) : ((mac_result[18:15] == 4'b0000) ? mac_result[14:8] : 7'b1111111))};
 endmodule
