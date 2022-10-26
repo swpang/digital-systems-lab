@@ -307,6 +307,15 @@ module fc_controller (
                         weight_counter <= 4'b0;
                         latency <= 2'b0;
                     end
+                    else if (weight_set_done) begin
+                        bram_en <= 1'b0;
+                        bram_addr <= 4'b1111;
+
+                        latency <= 2'b0;
+                        weight_set_done <= 1'b0;
+                        bram_counter <= 8'b0;
+                        bram_state <= STATE_WEIGHT_SET;
+                    end
                     else if (mac_state == STATE_IDLE) begin
                         bram_counter <= bram_counter + 8'b1;
                         bram_en <= 1'b1;
@@ -314,7 +323,7 @@ module fc_controller (
                             bram_addr <= WEIGHT_START_ADDRESS + bram_counter + 2 * weight_counter;
                         end
 
-                        if (latency < MEM_LATENCY + 1) begin
+                        if (latency < MEM_LATENCY) begin
                             latency <= latency + 1'b1;
                         end
                         else begin
@@ -330,7 +339,11 @@ module fc_controller (
                                 latency <= 2'b0;
                                 bram_state <= STATE_WEIGHT_SET;
                                 
-                                $display ("this is the weight buffer : %4b", weight_bf);
+                                // $display ("weight counter : %d", weight_counter);
+
+                                //$display ("input buffer : %4b", input_feature);
+                                //$display ("weight buffer : %4b", weight_bf);
+                                //$display ("bias buffer : %4b", bias);
                             end
                         end
                     end
@@ -402,7 +415,8 @@ module fc_controller (
                     mac_en <= 1'b1;
                     mac_add <= 1'b0;
                     if (mac_done) begin
-                        if (mac_counter == INPUT_SIZE) begin
+                        partial_sum <= mac_result;
+                        if (mac_counter == INPUT_SIZE - 1) begin
                             mac_state <= STATE_BIAS_ADD;
                             mac_counter <= 4'b0;
                         end
@@ -410,8 +424,7 @@ module fc_controller (
                             mac_state <= STATE_ACCUMULATE;
                             mac_counter <= mac_counter + 4'b1;
                             
-                            partial_sum <= mac_result;
-                            $display ("%d x %d = %d", data_a, data_b, mac_result);
+                            // $display ("%d x %d", data_a, data_b);
                         end
                     end
                     else begin
@@ -427,19 +440,19 @@ module fc_controller (
                     mac_add <= 1'b1;
 
                     if (mac_done) begin
-                        if (output_counter == OUTPUT_SIZE) begin
-                            mac_state <= STATE_DATA_SEND;
-
-                            output_counter <= 4'b0;
+                        partial_sum <= mac_result;
+                        if (output_counter < OUTPUT_SIZE - 1) begin
+                            output_counter <= output_counter + 4'b1;
                             mac_en <= 1'b0;
+                            mac_state <= STATE_IDLE;
                         end
                         else begin
-                            output_counter <= output_counter + 4'b1;
-                            out_data <= out_data << BYTE_SIZE;
-                            out_data[BYTE_SIZE-1:0] <= result_q;
-                            
-                            $display ("%d + %d = %d", data_a, data_c, mac_result);
-                            $display ("quantized result : %d", result_q);
+                            mac_state <= STATE_DATA_SEND;
+                            output_counter <= 4'b0;
+                            mac_en <= 1'b0;
+
+                            out_data[(BYTE_SIZE*output_counter)+:8] <= result_q;
+                            // $display ("%d + %d", data_a, data_c);
                         end
                     end
                     else begin
@@ -452,6 +465,9 @@ module fc_controller (
                     if (t_valid) begin
                         t_valid <= 1'b0;
                         mac_state <= STATE_IDLE;
+
+                        $display ("unquantized result : %d", mac_result);
+                        $display ("quantized result : %d", result_q);
                     end
                     else begin
                         t_valid <= 1'b1;
@@ -475,8 +491,8 @@ module fc_controller (
     end
 
     // TODO: Assign data for MAC and quantization.
-    assign data_a = (mac_state == STATE_ACCUMULATE) ? input_feature : bias;
-    assign data_b = weight;
+    assign data_a = (mac_state == STATE_ACCUMULATE) ? input_feature[(8*mac_counter)+:8] : bias[(8*mac_counter)+:8];
+    assign data_b = weight[(8*mac_counter)+:8];
     assign data_c = partial_sum;
     assign result_q = {mac_result[19], ((mac_result[19]) ? ((mac_result[18:15] == 4'b1111) ? mac_result[14:8] : 7'b0000000) : ((mac_result[18:15] == 4'b0000) ? mac_result[14:8] : 7'b1111111))};
 endmodule

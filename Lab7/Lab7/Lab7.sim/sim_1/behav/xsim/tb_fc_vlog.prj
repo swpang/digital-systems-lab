@@ -1,0 +1,12 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../Lab7.srcs/sources_1/ip/bram_32x16/sim/bram_32x16.v" \
+"../../../../../source-code/fc_controller.v" \
+"../../../../../source-code/mac.v" \
+"../../../../../source-code/tb_fc.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
