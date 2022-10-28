@@ -60,6 +60,7 @@ module mac #(
                     end
                     else begin
                         state <= STATE_IDLE;
+                        done <= 1'b0;
                     end
                 end
                 STATE_MULT: begin
@@ -81,6 +82,7 @@ module mac #(
                     out_temp <= out_temp + data_c_bf;
                     done <= 1'b1;
 
+                    state <= STATE_IDLE;
                 end
                 default:;
            endcase
