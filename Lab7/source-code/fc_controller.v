@@ -294,7 +294,7 @@ module fc_controller (
                 // and restart STATE_WEIGHT_SET for preparing next weights.
                 // If weight_counter counts as output size, it means all weight value setting is done. So, move to STATE_IDLE
 
-                //////////////////////////////TO-DO/////////////////////////////////
+                // TO DO 1 : 
 
                     bram_we <= 1'b0;
                     if (weight_counter == OUTPUT_SIZE) begin
@@ -307,15 +307,17 @@ module fc_controller (
                         weight_counter <= 4'b0;
                         latency <= 2'b0;
                     end
-                    else if (weight_set_done) begin
-                        bram_en <= 1'b0;
-                        bram_addr <= 4'b1111;
 
-                        latency <= 2'b0;
-                        weight_set_done <= 1'b0;
-                        bram_counter <= 8'b0;
-                        bram_state <= STATE_WEIGHT_SET;
-                    end
+                    // else if (weight_set_done) begin
+                    //     bram_en <= 1'b0;
+                    //     bram_addr <= 4'b1111;
+
+                    //     latency <= 2'b0;
+                    //     weight_set_done <= 1'b0;
+                    //     bram_counter <= 8'b0;
+                    //     bram_state <= STATE_WEIGHT_SET;
+                    // end
+
                     else if (mac_state == STATE_IDLE) begin
                         bram_counter <= bram_counter + 8'b1;
                         bram_en <= 1'b1;
@@ -324,13 +326,14 @@ module fc_controller (
                         end
 
                         if (latency < MEM_LATENCY) begin
-                            latency <= latency + 1'b1;
+                            latency <= latency + 1'b1; 
                         end
                         else begin
-                            weight_bf <= weight_bf >> 32;
-                            weight_bf[INPUT_SIZE*BYTE_SIZE-1:INPUT_SIZE*BYTE_SIZE-32] <= bram_dout;
-                            
-                            if (bram_counter == (INPUT_SIZE>>2)+MEM_LATENCY) begin
+                            if (bram_counter < (INPUT_SIZE>>2)+MEM_LATENCY) begin
+                                weight_bf <= weight_bf >> 32;
+                                weight_bf[INPUT_SIZE*BYTE_SIZE-1:INPUT_SIZE*BYTE_SIZE-32] <= bram_dout;
+                            end
+                            else begin
                                 weight_set_done <= 1'b1;
                                 weight_counter <= weight_counter + 1'b1;
 
@@ -340,10 +343,9 @@ module fc_controller (
                                 bram_state <= STATE_WEIGHT_SET;
                                 
                                 // $display ("weight counter : %d", weight_counter);
-
-                                //$display ("input buffer : %4b", input_feature);
-                                //$display ("weight buffer : %4b", weight_bf);
-                                //$display ("bias buffer : %4b", bias);
+                                // $display ("input buffer : %4b", input_feature);
+                                // $display ("weight buffer : %4b", weight_bf);
+                                // $display ("bias buffer : %4b", bias);
                             end
                         end
                     end
@@ -351,8 +353,6 @@ module fc_controller (
                         bram_state <= STATE_WEIGHT_SET;
                     end
                 end
-
-                //////////////////////////////////////////////////////////////////////
 
                 default: begin
                     bram_en <= 1'b0;
@@ -396,6 +396,7 @@ module fc_controller (
                         mac_state <= STATE_ACCUMULATE;
                         weight_set_done <= 1'b0;
                         mac_en <= 1'b1;
+                        mac_add <= 1'b0;
                     end
                     else begin
                         mac_state <= STATE_IDLE;
@@ -405,20 +406,27 @@ module fc_controller (
 
                 // Accumulate productions of weight and value for one output.
                 STATE_ACCUMULATE: begin
-                // TO DO
+            
+                
+                
+                
+                // TO DO 2 : this part is correct.
+
+
+
+
                 // take one 1 byte from each of input_data and weight
                 // and save them to a, b
                 // put result in mac_output
                 // recursively call MAC 8 times?
 
                 // use mac_counter to count the number of times state_accumulate was repeated
-                    mac_en <= 1'b1;
-                    mac_add <= 1'b0;
                     if (mac_done) begin
                         partial_sum <= mac_result;
                         if (mac_counter == INPUT_SIZE - 1) begin
                             mac_state <= STATE_BIAS_ADD;
                             mac_counter <= 4'b0;
+                            mac_add <= 1'b1;
                         end
                         else begin
                             mac_state <= STATE_ACCUMULATE;
@@ -434,25 +442,28 @@ module fc_controller (
                 
                 // Add bias for one output.
                 STATE_BIAS_ADD: begin
-                // TO DO
-                // set add bit = 1 and put bias into input_a
-                    mac_en <= 1'b1;
-                    mac_add <= 1'b1;
+                
+                
+                
+                // TO DO 3 : i think this part is correct....?
 
+
+
+                // set add bit = 1 and put bias into input_a
                     if (mac_done) begin
                         partial_sum <= mac_result;
+                        out_data[(BYTE_SIZE*output_counter)+:8] <= result_q;
+
+                        mac_en <= 1'b0;
+                        $display ("output counter : %d", output_counter);
+
                         if (output_counter < OUTPUT_SIZE - 1) begin
                             output_counter <= output_counter + 4'b1;
-                            mac_en <= 1'b0;
                             mac_state <= STATE_IDLE;
                         end
                         else begin
                             mac_state <= STATE_DATA_SEND;
                             output_counter <= 4'b0;
-                            mac_en <= 1'b0;
-
-                            out_data[(BYTE_SIZE*output_counter)+:8] <= result_q;
-                            // $display ("%d + %d", data_a, data_c);
                         end
                     end
                     else begin
@@ -465,13 +476,13 @@ module fc_controller (
                     if (t_valid) begin
                         t_valid <= 1'b0;
                         mac_state <= STATE_IDLE;
-
-                        $display ("unquantized result : %d", mac_result);
-                        $display ("quantized result : %d", result_q);
                     end
                     else begin
                         t_valid <= 1'b1;
                         mac_state <= STATE_DATA_SEND;
+
+                        $display ("unquantized result : %d", mac_result);
+                        $display ("quantized result : %d", result_q);
                     end
                 end
                 default: begin
