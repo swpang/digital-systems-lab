@@ -16,6 +16,8 @@ module seven_segment_Ctrl(
                  // count     0  ->  1  ->  2  ->  3  ->  4  ->  5  ->  6  ->  7
               // activates   LED1   LED2   LED3   LED4   LED5   LED6   LED7   LED8 
              // and repeat
+    integer i;
+    reg [31:0] bcd_encoded;
 
     always @(posedge clk)   begin 
         if(!rstn)   refresh_counter <= 0;
@@ -70,12 +72,54 @@ module seven_segment_Ctrl(
         //  Turn on the One digit for the time interval you designed.	                                   //
         //  (Set "Low" bit to Anode & Get the number that want to represent)                       //
         //  The displayed eight numbers(Decimal) should be the same as in_data                    //
-        //-------------------------------------------------------------------------------------------- //      
-	   case(LED_activating_counter)
+        //-------------------------------------------------------------------------------------------- //   
+            // how to change binary number to decimal
+            for (i=0; i<27; i=i+1) begin
+                if (bcd_encoded[3:0] >= 5) bcd_encoded[3:0] = bcd_encoded[3:0] + 3;
+                if (bcd_encoded[7:4] >= 5) bcd_encoded[7:4] = bcd_encoded[7:4] + 3;
+                if (bcd_encoded[11:8] >= 5) bcd_encoded[11:8] = bcd_encoded[11:8] + 3;
+                if (bcd_encoded[15:12] >= 5) bcd_encoded[15:12] = bcd_encoded[15:12] + 3;
+                if (bcd_encoded[19:16] >= 5) bcd_encoded[19:16] = bcd_encoded[19:16] + 3;
+                if (bcd_encoded[23:20] >= 5) bcd_encoded[23:20] = bcd_encoded[23:20] + 3;
+                if (bcd_encoded[27:24] >= 5) bcd_encoded[27:24] = bcd_encoded[27:24] + 3;
+                if (bcd_encoded[31:28] >= 5) bcd_encoded[31:28] = bcd_encoded[31:28] + 3;
+                bcd_encoded = {bcd_encoded[17:0], in_data[26-i]};
+            end
 
-
-
-	   endcase
+            case(LED_activating_counter)
+                3'b111: begin
+                    anode = 8'b0111_1111;  // activate LED8 (MSB)
+                    One_digit = bcd_encoded[31:28];
+                    end 
+                3'b110: begin
+                    anode = 8'b1011_1111;  // activate LED7
+                    One_digit = bcd_encoded[27:24];
+                    end   
+                3'b101: begin
+                    anode = 8'b1101_1111;  // activate LED6
+                    One_digit = bcd_encoded[23:20];
+                    end 
+                3'b100: begin
+                    anode = 8'b1110_1111;  // activate LED5
+                    One_digit = bcd_encoded[19:16];
+                    end                
+                3'b011: begin
+                    anode = 8'b1111_0111;  // activate LED4 
+                    One_digit = bcd_encoded[15:12];  
+                    end
+                3'b010: begin
+                    anode <= 8'b1111_1011;  // activate LED3 
+                    One_digit = bcd_encoded[11:8];
+                    end
+                3'b001: begin
+                    anode = 8'b1111_1101; // activate LED2 
+                    One_digit = bcd_encoded[7:4];
+                    end
+                3'b000: begin
+                    anode = 8'b1111_1110;  // activate LED1 (LSB)
+                    One_digit = bcd_encoded[3:0];
+                    end
+            endcase         
         end
     end
 
@@ -86,16 +130,16 @@ module seven_segment_Ctrl(
         //------------------------------------------To Do Code---------------------------------------//
         //             Fill the rest of the conditions to repesent the numbers from "0" ~ "9"         
         //-------------------------------------------------------------------------------------------- //    
-        4'd00 : select_seg =             // alphabet "O"
-        4'd01 : select_seg = 
-        4'd02 : select_seg = 
-        4'd03 : select_seg = 
-        4'd04 : select_seg = 
-        4'd05 : select_seg = 
-        4'd06 : select_seg = 
-        4'd07 : select_seg = 
-        4'd08 : select_seg = 
-        4'd09 : select_seg = 
+        4'd00 : select_seg = 8'b00000011; // alphabet "O"
+        4'd01 : select_seg = 8'b10011111;
+        4'd02 : select_seg = 8'b00100101;
+        4'd03 : select_seg = 8'b00001101;
+        4'd04 : select_seg = 8'b10011001;
+        4'd05 : select_seg = 8'b01001001;
+        4'd06 : select_seg = 8'b01000001;
+        4'd07 : select_seg = 8'b00011111;
+        4'd08 : select_seg = 8'b00000001;
+        4'd09 : select_seg = 8'b00001001;
         4'd10 : select_seg = 8'b11000111; // alphabet "u"
         4'd11 : select_seg = 8'b11100001; // alpahbet "t"
         4'd12 : select_seg = 8'b01110001; // alphabet "F"
