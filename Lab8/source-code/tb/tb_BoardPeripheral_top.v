@@ -95,7 +95,8 @@ initial begin
     @ (negedge clk);    
     StorageDecimalValue = StorageDecimalValue + 10000000*ConvertedOut(select_seg); 
     
-    
+    $display ("val : %d", StorageDecimalValue);
+    $display ("temp : %d", temp);
     if (StorageDecimalValue == temp+1) begin
         $display ("**************************");
         $display ("    Plus 1 is correct !!  ");

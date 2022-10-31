@@ -1,0 +1,10 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/BoardPeripheral_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module BoardPeripheral_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/arithmetic.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arithmetic
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/get_SWinfo.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module get_SWinfo
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/seven_segment_Ctrl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module seven_segment_Ctrl
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/tb/tb_BoardPeripheral_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_BoardPeripheral_top

@@ -1,0 +1,13 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../source-code/BoardPeripheral_top.v" \
+"../../../../../source-code/arithmetic.v" \
+"../../../../../source-code/get_SWinfo.v" \
+"../../../../../source-code/seven_segment_Ctrl.v" \
+"../../../../../source-code/tb/tb_BoardPeripheral_top.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

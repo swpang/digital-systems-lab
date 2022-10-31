@@ -1,0 +1,10 @@
+0.6
+2019.1
+May 24 2019
+15:06:07
+C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/Lab8/Lab8.sim/sim_1/behav/xsim/glbl.v,1558713910,verilog,,,,glbl,,,,,,,,
+C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/BoardPeripheral_top.v,1667227971,verilog,,C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/arithmetic.v,,BoardPeripheral_top,,,,,,,,
+C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/arithmetic.v,1667219191,verilog,,C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/get_SWinfo.v,,arithmetic,,,,,,,,
+C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/get_SWinfo.v,1667219191,verilog,,C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/seven_segment_Ctrl.v,,get_SWinfo,,,,,,,,
+C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/seven_segment_Ctrl.v,1667219560,verilog,,C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/tb/tb_BoardPeripheral_top.v,,seven_segment_Ctrl,,,,,,,,
+,,,,,,tb_BoardPeripheral_top,,,,,,,,

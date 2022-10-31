@@ -1,7 +1,7 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-// Date        : Fri Oct 28 15:12:26 2022
+// Date        : Fri Oct 28 15:30:02 2022
 // Host        : XPS8920 running 64-bit major release  (build 9200)
 // Command     : write_verilog -mode timesim -nolib -sdf_anno true -force -file {C:/Users/DELL/OneDrive -
 //               SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab7/Lab7/Lab7.sim/sim_1/synth/timing/xsim/tb_fc_time_synth.v}

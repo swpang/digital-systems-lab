@@ -1,0 +1,17 @@
+Vivado Simulator 2019.1
+Time resolution is 1 ps
+val :     12346
+temp :     12345
+**************************
+    Plus 1 is correct !!  
+**************************
+**************************
+   Minus 1 is correct !!  
+**************************
+**************************
+Multiply by 2 is correct!!
+**************************
+**************************
+ Divide by 2 is correct !!
+**************************
+$finish called at time : 524287950 ns : File "C:/Users/DELL/OneDrive - SNU/Documents/2022-2/digital-systems/digital-systems-lab/Lab8/source-code/tb/tb_BoardPeripheral_top.v" Line 274
