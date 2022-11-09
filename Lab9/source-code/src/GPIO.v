@@ -29,11 +29,11 @@ module LEDindicator
     always @(posedge clk) begin
         if (!rstn) begin
             led_out <= 8'b0;
-
         end
         else begin
             if(in_valid) begin
                 led_out <= in_data;
+                $display ($time, " led : %b", led_out);
             end
             else begin
                 led_out <= led_out;

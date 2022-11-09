@@ -87,6 +87,9 @@ initial begin
     repeat (150)
     @ (negedge clk);
  
+    $display ("led : %b", led_out_data);
+    $display ("uart : %b", uart_in_data);
+
     if (uart_in_data == led_out_data) begin
         $display ("***********************");
         $display (" UART_Rx is correct !! ");
@@ -98,6 +101,7 @@ initial begin
         $display ("***********************");
     end
         
+    $finish;
 
     repeat (1000)
     @ (negedge clk);

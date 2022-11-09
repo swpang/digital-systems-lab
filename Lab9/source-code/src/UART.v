@@ -61,39 +61,41 @@ module receiver
             {uart_rx_buf1, uart_rx_buf2} <= 2'b11;
         end
         else begin
+            baud_rate_count <= 1'b0;
             state <= next_state;
+
             {uart_rx_buf1, uart_rx_buf2} <= {uart_rx, uart_rx_buf1};
 
             if (state == IDLE) begin
-                if (init_count == 4'b1111)
-                    init_count <= 0;
-                else begin
-                    if (uart_rx_buf2 == 0)
-                        init_count <= init_count + 1;
-                    else
-                        init_count <= 0;
-                end
+                rdata_valid <= 1'b0;
+                if (uart_rx_buf2 == 0) init_count <= init_count + 1'b1;
             end
             else if (state == RCV) begin
-                if (receive_bit == 4'b0111) begin
-                    rdata_valid <= 1;
-                    receive_bit <= 0;
+                if (baud_rate_count == baud_rate) begin
+                    rdata <= {uart_rx_buf2, rdata[7:1]};
+                    if (receive_bit < 4'b0111) begin
+                        receive_bit <= receive_bit + 1'b1;
+                        rdata_valid <= 1'b0;
+                        // $display ($time, " r_bit : %b \trdata : %b", receive_bit, rdata);
+                    end
+                    else if (receive_bit == 4'b0111) begin
+                        receive_bit <= receive_bit + 1'b1;
+                        rdata_valid <= 1'b1;
+                        // $display ($time, " r_bit : %b \trdata : %b", receive_bit, rdata);
+                    end
+                    else begin
+                        rdata_valid <= 1'b0;
+                        receive_bit <= 1'b0;
+                        // $display ($time, " r_bit : %b \trdata : %b", receive_bit, rdata);
+                    end
                 end
                 else begin
-                    rdata_valid <= 0;
-                    if (baud_rate_count == baud_rate) begin
-                        baud_rate_count <= 0;
-                        rdata <= rdata >> 1;
-                        rdata[7] <= uart_rx_buf2;
-                        receive_bit <= receive_bit + 1;
-                    end
-                    else 
-                        baud_rate_count <= baud_rate_count + 1;
+                    rdata_valid <= 1'b0;
+                    baud_rate_count <= baud_rate_count + 1'b1;
                 end
             end
         end
     end
-    
 endmodule
 
 module transmitter
